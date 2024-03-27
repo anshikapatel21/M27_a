@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+
+class OnHoverHeight extends StatefulWidget {
+  final Widget Function(bool isHovered) increase;
+
+  const OnHoverHeight({Key? key, required this.increase,}) : super(key: key);
+
+  @override
+  _OnHoverHeightState createState() => _OnHoverHeightState();
+}
+
+class _OnHoverHeightState extends State<OnHoverHeight> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (event) => onEntered(true),
+      onExit: (event) => onEntered(false),
+      cursor: SystemMouseCursors.click,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 400),
+        child: widget.increase(isHovered),
+      ),
+    );
+  }
+
+  void onEntered(bool isHovered) => setState(() {
+    this.isHovered = isHovered;
+  });
+}
